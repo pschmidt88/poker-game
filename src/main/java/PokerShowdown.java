@@ -11,6 +11,6 @@ public class PokerShowdown {
     }
 
     public Player winner() {
-        throw new RuntimeException("implement me");
+        return player1;
     }
 }

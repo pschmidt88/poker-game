@@ -1,12 +1,17 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class Hand {
-    private final List<Card> cards;
+public class Hand implements Comparable<Hand> {
+    final List<Card> cards;
 
     public Hand(List<Card> cards) {
         this.cards = cards;
+    }
+
+    public HandValue getHandValue() {
+        return HandValue.fromHand(this);
     }
 
     public boolean isFlush() {
@@ -16,7 +21,6 @@ public class Hand {
         }
         return true;
     }
-
 
     public boolean isFourOfAKind() {
         return occurrencesOfValues(4);
@@ -79,7 +83,8 @@ public class Hand {
 
     public boolean isStraight() {
         ArrayList<Card> mutableCopy = new ArrayList<>(cards);
-        mutableCopy.sort(null);
+        Collections.sort(mutableCopy);
+        Collections.reverse(mutableCopy);
 
         if (mutableCopy.get(0).value() == Card.CardValue.ACE && mutableCopy.get(1).value() == Card.CardValue.FIVE) {
             return checkForStraight(mutableCopy.subList(1,5));
@@ -99,5 +104,10 @@ public class Hand {
 
     public boolean isStraightFlush() {
         return isFlush() && isStraight();
+    }
+
+    @Override
+    public int compareTo(Hand o) {
+        return this.getHandValue().compareTo(o.getHandValue());
     }
 }

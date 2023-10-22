@@ -35,6 +35,6 @@ public record Card(
 
     @Override
     public int compareTo(Card o) {
-        return this.value.compareTo(o.value) * -1;
+        return this.value.compareTo(o.value);
     }
 }

@@ -1,9 +1,22 @@
+import com.google.common.collect.Lists;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 
 class HandValueTest {
+
+    /**
+     * Just a smoke test to test general comparison between different hand values.
+     * If this works, I can safely trust java to be able to compare integers
+     */
+    @Test
+    public void FlushIsHigherRankThanStraight() {
+        Assertions.assertThatComparable(
+                new Flush(Lists.newArrayList(Card.CardValue.TEN, Card.CardValue.NINE, Card.CardValue.EIGHT, Card.CardValue.SEVEN, Card.CardValue.FIVE))
+        ).isGreaterThan(
+                new Straight(Card.CardValue.SEVEN)
+        );
+    }
 
     @Test
     public void FourOfAKindComparisonWorks() {
@@ -44,91 +57,77 @@ class HandValueTest {
 
     @Test
     public void FlushComparisonWorks() {
-        Assertions.assertThatComparable(
-                new Flush(List.of(Card.CardValue.QUEEN,
-                        Card.CardValue.FOUR,
-                        Card.CardValue.EIGHT,
-                        Card.CardValue.NINE,
-                        Card.CardValue.TEN))).isGreaterThan(
-                        new Flush(List.of(
-                                Card.CardValue.JACK,
-                                Card.CardValue.NINE,
-                                Card.CardValue.SEVEN,
-                                Card.CardValue.SIX,
-                                Card.CardValue.FIVE))
-                );
+        var Q10984 = Lists.newArrayList(Card.CardValue.QUEEN,
+                Card.CardValue.TEN,
+                Card.CardValue.NINE,
+                Card.CardValue.EIGHT,
+                Card.CardValue.FOUR);
+
+        var J9765 = Lists.newArrayList(
+                Card.CardValue.JACK,
+                Card.CardValue.NINE,
+                Card.CardValue.SEVEN,
+                Card.CardValue.SIX,
+                Card.CardValue.FIVE);
+
+        var Q9765 = Lists.newArrayList(
+                Card.CardValue.QUEEN,
+                Card.CardValue.NINE,
+                Card.CardValue.SEVEN,
+                Card.CardValue.SIX,
+                Card.CardValue.FIVE);
+
+        var Q10765 = Lists.newArrayList(
+                Card.CardValue.QUEEN,
+                Card.CardValue.TEN,
+                Card.CardValue.SEVEN,
+                Card.CardValue.SIX,
+                Card.CardValue.FIVE);
+
+        var Q10965 = Lists.newArrayList(
+                Card.CardValue.QUEEN,
+                Card.CardValue.TEN,
+                Card.CardValue.NINE,
+                Card.CardValue.SIX,
+                Card.CardValue.FIVE);
+
+        var Q10985 = Lists.newArrayList(
+                Card.CardValue.QUEEN,
+                Card.CardValue.TEN,
+                Card.CardValue.NINE,
+                Card.CardValue.EIGHT,
+                Card.CardValue.FIVE);
+
+        var Q10986 = Lists.newArrayList(Card.CardValue.QUEEN,
+                Card.CardValue.TEN,
+                Card.CardValue.NINE,
+                Card.CardValue.EIGHT,
+                Card.CardValue.SIX);
 
         Assertions.assertThatComparable(
-                new Flush(List.of(Card.CardValue.QUEEN,
-                        Card.CardValue.FOUR,
-                        Card.CardValue.EIGHT,
-                        Card.CardValue.NINE,
-                        Card.CardValue.TEN))).isGreaterThan(
-                new Flush(List.of(
-                        Card.CardValue.QUEEN,
-                        Card.CardValue.NINE,
-                        Card.CardValue.SEVEN,
-                        Card.CardValue.SIX,
-                        Card.CardValue.FIVE))
-        );
+                new Flush(Q10984)).isGreaterThan(new Flush(J9765));
 
         Assertions.assertThatComparable(
-                new Flush(List.of(Card.CardValue.QUEEN,
-                        Card.CardValue.FOUR,
-                        Card.CardValue.EIGHT,
-                        Card.CardValue.NINE,
-                        Card.CardValue.TEN))).isGreaterThan(
-                new Flush(List.of(
-                        Card.CardValue.QUEEN,
-                        Card.CardValue.TEN,
-                        Card.CardValue.SEVEN,
-                        Card.CardValue.SIX,
-                        Card.CardValue.FIVE)));
+                new Flush(Q10984)).isGreaterThan(new Flush(Q9765));
 
         Assertions.assertThatComparable(
-                new Flush(List.of(Card.CardValue.QUEEN,
-                        Card.CardValue.FOUR,
-                        Card.CardValue.EIGHT,
-                        Card.CardValue.NINE,
-                        Card.CardValue.TEN))).isGreaterThan(
-                new Flush(List.of(
-                        Card.CardValue.QUEEN,
-                        Card.CardValue.TEN,
-                        Card.CardValue.NINE,
-                        Card.CardValue.SIX,
-                        Card.CardValue.FIVE)));
-        Assertions.assertThatComparable(
-                new Flush(List.of(Card.CardValue.QUEEN,
-                        Card.CardValue.SIX,
-                        Card.CardValue.EIGHT,
-                        Card.CardValue.NINE,
-                        Card.CardValue.TEN))).isGreaterThan(
-                new Flush(List.of(
-                        Card.CardValue.QUEEN,
-                        Card.CardValue.TEN,
-                        Card.CardValue.NINE,
-                        Card.CardValue.EIGHT,
-                        Card.CardValue.FIVE)));
+                new Flush(Q10984)).isGreaterThan(new Flush(Q10765));
 
         Assertions.assertThatComparable(
-                new Flush(List.of(Card.CardValue.QUEEN,
-                        Card.CardValue.SIX,
-                        Card.CardValue.EIGHT,
-                        Card.CardValue.NINE,
-                        Card.CardValue.TEN))).isEqualByComparingTo(
-                new Flush(List.of(
-                        Card.CardValue.QUEEN,
-                        Card.CardValue.TEN,
-                        Card.CardValue.NINE,
-                        Card.CardValue.EIGHT,
-                        Card.CardValue.SIX)));
+                new Flush(Q10984)).isGreaterThan(new Flush(Q10965));
+
+        Assertions.assertThatComparable(
+                new Flush(Q10985)).isGreaterThan(new Flush(Q10984));
+
+        Assertions.assertThatComparable(
+                new Flush(Q10986)).isEqualByComparingTo(new Flush(Q10986));
     }
 
     @Test
     public void StraightComparisonWorks() {
-       Assertions.assertThatComparable(
-               new Straight(Card.CardValue.EIGHT)
-       ).isGreaterThan(new Straight(Card.CardValue.FIVE));
+        Assertions.assertThatComparable(
+                new Straight(Card.CardValue.EIGHT)
+        ).isGreaterThan(new Straight(Card.CardValue.FIVE));
 
         Assertions.assertThatComparable(
                 new Straight(Card.CardValue.EIGHT)
@@ -142,20 +141,20 @@ class HandValueTest {
     @Test
     public void ThreeOfAKindComparisonWorks() {
         Assertions.assertThatComparable(
-                new ThreeOfAKind(Card.CardValue.EIGHT, List.of(Card.CardValue.SIX, Card.CardValue.SEVEN))
-        ).isGreaterThan(new ThreeOfAKind(Card.CardValue.FIVE, List.of(Card.CardValue.SIX, Card.CardValue.SEVEN)));
+                new ThreeOfAKind(Card.CardValue.EIGHT, Lists.newArrayList(Card.CardValue.SIX, Card.CardValue.SEVEN))
+        ).isGreaterThan(new ThreeOfAKind(Card.CardValue.FIVE, Lists.newArrayList(Card.CardValue.SIX, Card.CardValue.SEVEN)));
 
         Assertions.assertThatComparable(
-                new ThreeOfAKind(Card.CardValue.EIGHT, List.of(Card.CardValue.SIX, Card.CardValue.SEVEN))
-        ).isGreaterThan(new ThreeOfAKind(Card.CardValue.FIVE, List.of(Card.CardValue.ACE, Card.CardValue.KING)));
+                new ThreeOfAKind(Card.CardValue.EIGHT, Lists.newArrayList(Card.CardValue.SIX, Card.CardValue.SEVEN))
+        ).isGreaterThan(new ThreeOfAKind(Card.CardValue.FIVE, Lists.newArrayList(Card.CardValue.ACE, Card.CardValue.KING)));
 
         Assertions.assertThatComparable(
-                new ThreeOfAKind(Card.CardValue.EIGHT, List.of(Card.CardValue.SIX, Card.CardValue.SEVEN))
-        ).isLessThan(new ThreeOfAKind(Card.CardValue.EIGHT, List.of(Card.CardValue.ACE, Card.CardValue.KING)));
+                new ThreeOfAKind(Card.CardValue.EIGHT, Lists.newArrayList(Card.CardValue.SIX, Card.CardValue.SEVEN))
+        ).isLessThan(new ThreeOfAKind(Card.CardValue.EIGHT, Lists.newArrayList(Card.CardValue.ACE, Card.CardValue.KING)));
 
         Assertions.assertThatComparable(
-                new ThreeOfAKind(Card.CardValue.EIGHT, List.of(Card.CardValue.SIX, Card.CardValue.SEVEN))
-        ).isEqualByComparingTo(new ThreeOfAKind(Card.CardValue.EIGHT, List.of(Card.CardValue.SIX, Card.CardValue.SEVEN)));
+                new ThreeOfAKind(Card.CardValue.EIGHT, Lists.newArrayList(Card.CardValue.SIX, Card.CardValue.SEVEN))
+        ).isEqualByComparingTo(new ThreeOfAKind(Card.CardValue.EIGHT, Lists.newArrayList(Card.CardValue.SIX, Card.CardValue.SEVEN)));
     }
 
     @Test
@@ -176,53 +175,52 @@ class HandValueTest {
     @Test
     public void PairComparisonWorks() {
         Assertions.assertThatComparable(
-                new Pair(Card.CardValue.TEN, List.of(Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE))
-        ).isGreaterThan(new Pair(Card.CardValue.EIGHT, List.of(Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE)));
+                new Pair(Card.CardValue.TEN, Lists.newArrayList(Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE))
+        ).isGreaterThan(new Pair(Card.CardValue.EIGHT, Lists.newArrayList(Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE)));
 
         Assertions.assertThatComparable(
-                new Pair(Card.CardValue.EIGHT, List.of(Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE))
-        ).isGreaterThan(new Pair(Card.CardValue.EIGHT, List.of(Card.CardValue.SIX, Card.CardValue.FIVE, Card.CardValue.FOUR)));
+                new Pair(Card.CardValue.EIGHT, Lists.newArrayList(Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE))
+        ).isGreaterThan(new Pair(Card.CardValue.EIGHT, Lists.newArrayList(Card.CardValue.SIX, Card.CardValue.FIVE, Card.CardValue.FOUR)));
 
         Assertions.assertThatComparable(
-                new Pair(Card.CardValue.EIGHT, List.of(Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE))
-        ).isGreaterThan(new Pair(Card.CardValue.EIGHT, List.of(Card.CardValue.SEVEN, Card.CardValue.FIVE, Card.CardValue.FOUR)));
+                new Pair(Card.CardValue.EIGHT, Lists.newArrayList(Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE))
+        ).isGreaterThan(new Pair(Card.CardValue.EIGHT, Lists.newArrayList(Card.CardValue.SEVEN, Card.CardValue.FIVE, Card.CardValue.FOUR)));
 
         Assertions.assertThatComparable(
-                new Pair(Card.CardValue.EIGHT, List.of(Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE))
-        ).isGreaterThan(new Pair(Card.CardValue.EIGHT, List.of(Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FOUR)));
+                new Pair(Card.CardValue.EIGHT, Lists.newArrayList(Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE))
+        ).isGreaterThan(new Pair(Card.CardValue.EIGHT, Lists.newArrayList(Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FOUR)));
 
         Assertions.assertThatComparable(
-                new Pair(Card.CardValue.EIGHT, List.of(Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE))
-        ).isEqualByComparingTo(new Pair(Card.CardValue.EIGHT, List.of(Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE)));
+                new Pair(Card.CardValue.EIGHT, Lists.newArrayList(Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE))
+        ).isEqualByComparingTo(new Pair(Card.CardValue.EIGHT, Lists.newArrayList(Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE)));
     }
 
     @Test
     public void HighCardComparisonWorks() {
         // KQ765 > QJ765
         Assertions.assertThatComparable(
-                new HighCard(List.of(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE))
-        ).isGreaterThan(new HighCard(List.of(Card.CardValue.QUEEN, Card.CardValue.JACK,Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE)));
+                new HighCard(Lists.newArrayList(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE))
+        ).isGreaterThan(new HighCard(Lists.newArrayList(Card.CardValue.QUEEN, Card.CardValue.JACK, Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE)));
 
         Assertions.assertThatComparable(
-                new HighCard(List.of(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE))
-        ).isGreaterThan(new HighCard(List.of(Card.CardValue.KING, Card.CardValue.JACK,Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE)));
+                new HighCard(Lists.newArrayList(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE))
+        ).isGreaterThan(new HighCard(Lists.newArrayList(Card.CardValue.KING, Card.CardValue.JACK, Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE)));
 
         Assertions.assertThatComparable(
-                new HighCard(List.of(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.EIGHT, Card.CardValue.SIX, Card.CardValue.FIVE))
-        ).isGreaterThan(new HighCard(List.of(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE)));
-
-
-        Assertions.assertThatComparable(
-                new HighCard(List.of(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.EIGHT, Card.CardValue.SIX, Card.CardValue.FIVE))
-        ).isGreaterThan(new HighCard(List.of(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.EIGHT, Card.CardValue.FIVE, Card.CardValue.FOUR)));
+                new HighCard(Lists.newArrayList(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.EIGHT, Card.CardValue.SIX, Card.CardValue.FIVE))
+        ).isGreaterThan(new HighCard(Lists.newArrayList(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.SEVEN, Card.CardValue.SIX, Card.CardValue.FIVE)));
 
         Assertions.assertThatComparable(
-                new HighCard(List.of(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.EIGHT, Card.CardValue.SIX, Card.CardValue.FIVE))
-        ).isGreaterThan(new HighCard(List.of(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.EIGHT, Card.CardValue.SIX, Card.CardValue.FOUR)));
+                new HighCard(Lists.newArrayList(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.EIGHT, Card.CardValue.SIX, Card.CardValue.FIVE))
+        ).isGreaterThan(new HighCard(Lists.newArrayList(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.EIGHT, Card.CardValue.FIVE, Card.CardValue.FOUR)));
 
         Assertions.assertThatComparable(
-                new HighCard(List.of(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.EIGHT, Card.CardValue.SIX, Card.CardValue.FIVE))
-        ).isEqualByComparingTo(new HighCard(List.of(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.EIGHT, Card.CardValue.SIX, Card.CardValue.FIVE)));
+                new HighCard(Lists.newArrayList(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.EIGHT, Card.CardValue.SIX, Card.CardValue.FIVE))
+        ).isGreaterThan(new HighCard(Lists.newArrayList(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.EIGHT, Card.CardValue.SIX, Card.CardValue.FOUR)));
+
+        Assertions.assertThatComparable(
+                new HighCard(Lists.newArrayList(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.EIGHT, Card.CardValue.SIX, Card.CardValue.FIVE))
+        ).isEqualByComparingTo(new HighCard(Lists.newArrayList(Card.CardValue.KING, Card.CardValue.QUEEN, Card.CardValue.EIGHT, Card.CardValue.SIX, Card.CardValue.FIVE)));
     }
 
 }

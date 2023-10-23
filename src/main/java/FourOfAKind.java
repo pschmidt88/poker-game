@@ -1,9 +1,6 @@
-import java.util.HashMap;
-import java.util.List;
-
 public class FourOfAKind extends HandValue {
-    private Card.CardValue kicker;
-    private Card.CardValue value;
+    private final Card.CardValue kicker;
+    private final Card.CardValue value;
 
     public FourOfAKind(Card.CardValue value, Card.CardValue kicker) {
         super(HandValueType.FOUR_OF_A_KIND);

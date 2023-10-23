@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Pair extends HandValue {
@@ -11,9 +9,7 @@ public class Pair extends HandValue {
         assert kicker.size() == 3;
 
         this.pairValue = value;
-        this.kicker = new ArrayList<>(kicker);
-        Collections.sort(this.kicker);
-        Collections.reverse(this.kicker);
+        this.kicker = kicker;
     }
 
     @Override

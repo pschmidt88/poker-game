@@ -1,4 +1,3 @@
-import jdk.jshell.spi.ExecutionControl;
 
 public class PokerShowdown {
 
@@ -11,6 +10,13 @@ public class PokerShowdown {
     }
 
     public Player winner() {
-        return player1;
+        if (player1.handValue().compareTo(player2.handValue()) > 0) {
+            return player1;
+        } else if (player1.handValue().compareTo(player2.handValue()) < 0) {
+            return player2;
+        }
+
+        // draw
+        return null;
     }
 }

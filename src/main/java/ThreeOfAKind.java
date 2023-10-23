@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ThreeOfAKind extends HandValue {
@@ -11,9 +9,7 @@ public class ThreeOfAKind extends HandValue {
         assert kicker.size() == 2;
 
         this.value = value;
-        this.kicker = new ArrayList<>(kicker);
-        Collections.sort(this.kicker);
-        Collections.reverse(this.kicker);
+        this.kicker = kicker;
     }
 
     @Override

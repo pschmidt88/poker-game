@@ -1,164 +1,164 @@
-import org.junit.jupiter.api.Assertions;
+import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class HandTest {
 
     @Test
-    public void ItCanCheckForAFlush() {
-        Assertions.assertTrue(new Hand(List.of(
+    public void ItRecognizesAFlush() {
+        assertThat(new Hand(Lists.newArrayList(
                 new Card(Card.CardSuit.SPADES, Card.CardValue.TWO),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.FIVE),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.KING),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.SEVEN),
-                new Card(Card.CardSuit.SPADES, Card.CardValue.JACK))).isFlush());
+                new Card(Card.CardSuit.SPADES, Card.CardValue.JACK))).getHandValue()).isInstanceOf(Flush.class);
 
-        Assertions.assertFalse(new Hand(List.of(
+        assertThat(new Hand(Lists.newArrayList(
                 new Card(Card.CardSuit.SPADES, Card.CardValue.TWO),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.FIVE),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.KING),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.SEVEN),
-                new Card(Card.CardSuit.HEARTS, Card.CardValue.JACK))).isFlush());
+                new Card(Card.CardSuit.HEARTS, Card.CardValue.JACK))).getHandValue()).isInstanceOf(HighCard.class);
     }
 
     @Test
-    public void ItCanCheckForStraightFlush() {
-        Assertions.assertTrue(new Hand(List.of(
+    public void ItRecognizesStraightFlushAndItCanDifferFromANormalStraight() {
+        assertThat(new Hand(Lists.newArrayList(
                 new Card(Card.CardSuit.SPADES, Card.CardValue.TWO),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.THREE),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.FOUR),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.FIVE),
-                new Card(Card.CardSuit.SPADES, Card.CardValue.SIX))).isStraightFlush());
+                new Card(Card.CardSuit.SPADES, Card.CardValue.SIX))).getHandValue()).isInstanceOf(StraightFlush.class);
 
-        Assertions.assertFalse(new Hand(List.of(
-                new Card(Card.CardSuit.SPADES, Card.CardValue.TWO),
-                new Card(Card.CardSuit.SPADES, Card.CardValue.THREE),
-                new Card(Card.CardSuit.HEARTS, Card.CardValue.FOUR),
-                new Card(Card.CardSuit.SPADES, Card.CardValue.FIVE),
-                new Card(Card.CardSuit.SPADES, Card.CardValue.SIX))).isStraightFlush());
-    }
-
-    @Test
-    public void ItCanCheckForStraight() {
-        Assertions.assertTrue(new Hand(List.of(
+        assertThat(new Hand(Lists.newArrayList(
                 new Card(Card.CardSuit.SPADES, Card.CardValue.TWO),
                 new Card(Card.CardSuit.HEARTS, Card.CardValue.THREE),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.FOUR),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.FIVE),
-                new Card(Card.CardSuit.SPADES, Card.CardValue.SIX))).isStraight());
+                new Card(Card.CardSuit.SPADES, Card.CardValue.SIX))).getHandValue()).isInstanceOf(Straight.class);
+    }
 
-        Assertions.assertTrue(new Hand(List.of(
+    @Test
+    public void ItRecognizesStraights() {
+        assertThat(new Hand(Lists.newArrayList(
+                new Card(Card.CardSuit.SPADES, Card.CardValue.TWO),
+                new Card(Card.CardSuit.HEARTS, Card.CardValue.THREE),
+                new Card(Card.CardSuit.SPADES, Card.CardValue.FOUR),
+                new Card(Card.CardSuit.SPADES, Card.CardValue.FIVE),
+                new Card(Card.CardSuit.SPADES, Card.CardValue.SIX))).getHandValue()).isInstanceOf(Straight.class);
+
+        assertThat(new Hand(Lists.newArrayList(
                 new Card(Card.CardSuit.SPADES, Card.CardValue.SIX),
                 new Card(Card.CardSuit.HEARTS, Card.CardValue.FOUR),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.THREE),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.FIVE),
-                new Card(Card.CardSuit.SPADES, Card.CardValue.TWO))).isStraight());
+                new Card(Card.CardSuit.SPADES, Card.CardValue.TWO))).getHandValue()).isInstanceOf(Straight.class);
 
-        Assertions.assertTrue(new Hand(List.of(
+        assertThat(new Hand(Lists.newArrayList(
                 new Card(Card.CardSuit.SPADES, Card.CardValue.ACE),
                 new Card(Card.CardSuit.HEARTS, Card.CardValue.FOUR),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.THREE),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.FIVE),
-                new Card(Card.CardSuit.SPADES, Card.CardValue.TWO))).isStraight());
+                new Card(Card.CardSuit.SPADES, Card.CardValue.TWO))).getHandValue()).isInstanceOf(Straight.class);
 
-        Assertions.assertTrue(new Hand(List.of(
+        assertThat(new Hand(Lists.newArrayList(
                 new Card(Card.CardSuit.SPADES, Card.CardValue.ACE),
                 new Card(Card.CardSuit.HEARTS, Card.CardValue.KING),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.QUEEN),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.JACK),
-                new Card(Card.CardSuit.SPADES, Card.CardValue.TEN))).isStraight());
+                new Card(Card.CardSuit.SPADES, Card.CardValue.TEN))).getHandValue()).isInstanceOf(Straight.class);
 
-        Assertions.assertFalse(new Hand(List.of(
+        assertThat(new Hand(Lists.newArrayList(
                 new Card(Card.CardSuit.SPADES, Card.CardValue.ACE),
                 new Card(Card.CardSuit.HEARTS, Card.CardValue.NINE),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.QUEEN),
                 new Card(Card.CardSuit.SPADES, Card.CardValue.JACK),
-                new Card(Card.CardSuit.SPADES, Card.CardValue.TEN))).isStraight());
+                new Card(Card.CardSuit.SPADES, Card.CardValue.TEN))).getHandValue()).isInstanceOf(HighCard.class);
     }
 
     @Test
-    public void ItCanCheckForFourOfAKind() {
-        Assertions.assertTrue(new Hand(List.of(
+    public void ItRecognizesAFourOfAKind() {
+        assertThat(new Hand(Lists.newArrayList(
                 new Card(Card.CardSuit.SPADES, Card.CardValue.TWO),
                 new Card(Card.CardSuit.HEARTS, Card.CardValue.TWO),
                 new Card(Card.CardSuit.DIAMONDS, Card.CardValue.TWO),
                 new Card(Card.CardSuit.CLUBS, Card.CardValue.TWO),
-                new Card(Card.CardSuit.HEARTS, Card.CardValue.JACK))).isFourOfAKind());
+                new Card(Card.CardSuit.HEARTS, Card.CardValue.JACK))).getHandValue()).isInstanceOf(FourOfAKind.class);
 
-        Assertions.assertFalse(new Hand(List.of(
+        assertThat(new Hand(Lists.newArrayList(
                 new Card(Card.CardSuit.SPADES, Card.CardValue.TWO),
                 new Card(Card.CardSuit.HEARTS, Card.CardValue.TWO),
                 new Card(Card.CardSuit.DIAMONDS, Card.CardValue.THREE),
                 new Card(Card.CardSuit.CLUBS, Card.CardValue.TWO),
-                new Card(Card.CardSuit.HEARTS, Card.CardValue.JACK))).isFourOfAKind());
+                new Card(Card.CardSuit.HEARTS, Card.CardValue.JACK))).getHandValue()).isInstanceOf(ThreeOfAKind.class);
     }
 
     @Test
-    public void ItCanCheckForThreeOfAKind() {
-        Assertions.assertTrue(new Hand(List.of(
+    public void ItRecognizesAThreeOfAKind() {
+        assertThat(new Hand(Lists.newArrayList(
                 new Card(Card.CardSuit.SPADES, Card.CardValue.TWO),
                 new Card(Card.CardSuit.HEARTS, Card.CardValue.TWO),
                 new Card(Card.CardSuit.DIAMONDS, Card.CardValue.TWO),
                 new Card(Card.CardSuit.CLUBS, Card.CardValue.THREE),
-                new Card(Card.CardSuit.HEARTS, Card.CardValue.JACK))).isThreeOfAKind());
+                new Card(Card.CardSuit.HEARTS, Card.CardValue.JACK))).getHandValue()).isInstanceOf(ThreeOfAKind.class);
 
-        Assertions.assertFalse(new Hand(List.of(
+       assertThat(new Hand(Lists.newArrayList(
                 new Card(Card.CardSuit.SPADES, Card.CardValue.TWO),
                 new Card(Card.CardSuit.HEARTS, Card.CardValue.TWO),
                 new Card(Card.CardSuit.DIAMONDS, Card.CardValue.THREE),
                 new Card(Card.CardSuit.CLUBS, Card.CardValue.FOUR),
-                new Card(Card.CardSuit.HEARTS, Card.CardValue.JACK))).isThreeOfAKind());
+                new Card(Card.CardSuit.HEARTS, Card.CardValue.JACK))).getHandValue()).isInstanceOf(Pair.class);
     }
 
     @Test
-    public void ItCanCheckForPairs() {
-        Assertions.assertTrue(new Hand(List.of(
+    public void ItRecognizesAPairs() {
+        assertThat(new Hand(Lists.newArrayList(
                 new Card(Card.CardSuit.SPADES, Card.CardValue.TWO),
                 new Card(Card.CardSuit.HEARTS, Card.CardValue.TWO),
                 new Card(Card.CardSuit.DIAMONDS, Card.CardValue.FOUR),
                 new Card(Card.CardSuit.CLUBS, Card.CardValue.THREE),
-                new Card(Card.CardSuit.HEARTS, Card.CardValue.JACK))).isPair());
+                new Card(Card.CardSuit.HEARTS, Card.CardValue.JACK))).getHandValue()).isInstanceOf(Pair.class);
 
-        Assertions.assertFalse(new Hand(List.of(
+        assertThat(new Hand(Lists.newArrayList(
                 new Card(Card.CardSuit.SPADES, Card.CardValue.TWO),
                 new Card(Card.CardSuit.HEARTS, Card.CardValue.FIVE),
                 new Card(Card.CardSuit.DIAMONDS, Card.CardValue.THREE),
                 new Card(Card.CardSuit.CLUBS, Card.CardValue.FOUR),
-                new Card(Card.CardSuit.HEARTS, Card.CardValue.JACK))).isPair());
+                new Card(Card.CardSuit.HEARTS, Card.CardValue.JACK))).getHandValue()).isNotInstanceOf(Pair.class);
     }
 
     @Test
-    public void ItCanCheckForFullHouse() {
-        Assertions.assertTrue(new Hand(List.of(
+    public void ItRecognizesAFullHouse() {
+        assertThat(new Hand(Lists.newArrayList(
                 new Card(Card.CardSuit.SPADES, Card.CardValue.TWO),
                 new Card(Card.CardSuit.HEARTS, Card.CardValue.TWO),
                 new Card(Card.CardSuit.DIAMONDS, Card.CardValue.TWO),
                 new Card(Card.CardSuit.CLUBS, Card.CardValue.THREE),
-                new Card(Card.CardSuit.HEARTS, Card.CardValue.THREE))).isFullHouse());
+                new Card(Card.CardSuit.HEARTS, Card.CardValue.THREE))).getHandValue()).isInstanceOf(FullHouse.class);
 
-        Assertions.assertFalse(new Hand(List.of(
+        assertThat(new Hand(Lists.newArrayList(
                 new Card(Card.CardSuit.SPADES, Card.CardValue.TWO),
                 new Card(Card.CardSuit.HEARTS, Card.CardValue.TWO),
                 new Card(Card.CardSuit.DIAMONDS, Card.CardValue.TWO),
                 new Card(Card.CardSuit.CLUBS, Card.CardValue.FOUR),
-                new Card(Card.CardSuit.HEARTS, Card.CardValue.JACK))).isFullHouse());
+                new Card(Card.CardSuit.HEARTS, Card.CardValue.JACK))).getHandValue()).isNotInstanceOf(FullHouse.class);
     }
 
     @Test
-    public void ItCanCheckForTwoPairs() {
-        Assertions.assertTrue(new Hand(List.of(
+    public void ItRecognizesTwoPairs() {
+        assertThat(new Hand(Lists.newArrayList(
                 new Card(Card.CardSuit.SPADES, Card.CardValue.TWO),
                 new Card(Card.CardSuit.HEARTS, Card.CardValue.TWO),
                 new Card(Card.CardSuit.DIAMONDS, Card.CardValue.THREE),
                 new Card(Card.CardSuit.CLUBS, Card.CardValue.THREE),
-                new Card(Card.CardSuit.HEARTS, Card.CardValue.KING))).isTwoPairs());
+                new Card(Card.CardSuit.HEARTS, Card.CardValue.KING))).getHandValue()).isInstanceOf(TwoPairs.class);
 
-        Assertions.assertFalse(new Hand(List.of(
+       assertThat(new Hand(Lists.newArrayList(
                 new Card(Card.CardSuit.SPADES, Card.CardValue.TWO),
                 new Card(Card.CardSuit.HEARTS, Card.CardValue.TWO),
                 new Card(Card.CardSuit.DIAMONDS, Card.CardValue.FIVE),
                 new Card(Card.CardSuit.CLUBS, Card.CardValue.FOUR),
-                new Card(Card.CardSuit.HEARTS, Card.CardValue.JACK))).isTwoPairs());
+                new Card(Card.CardSuit.HEARTS, Card.CardValue.JACK))).getHandValue()).isNotInstanceOf(TwoPairs.class);
     }
 }

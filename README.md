@@ -4,59 +4,50 @@
 
 - Java 17
 
+## Run 
+
+There is a test class `PokerShowdownTest` with existing tests. 
+You can freely add more tests or edit the existing ones and replace the hands that should be 
+played against each other.
+
 ```java
+@Test
+public void AliceWinsWithAPairOfTwosAgainstBobWithHighCardKing() {
+    var alice = new Player("Alice", List.of(
+            new Card(Card.CardSuit.CLUBS, Card.CardValue.TWO),
+            new Card(Card.CardSuit.DIAMONDS, Card.CardValue.TWO),
+            new Card(Card.CardSuit.CLUBS, Card.CardValue.KING),
+            new Card(Card.CardSuit.DIAMONDS, Card.CardValue.SEVEN),
+            new Card(Card.CardSuit.DIAMONDS, Card.CardValue.FOUR)
+    ));
 
-import java.util.List;
+    var bob = new Player("Bob", List.of(
+            new Card(Card.CardSuit.DIAMONDS, Card.CardValue.KING),
+            new Card(Card.CardSuit.DIAMONDS, Card.CardValue.JACK),
+            new Card(Card.CardSuit.DIAMONDS, Card.CardValue.TEN),
+            new Card(Card.CardSuit.SPADES, Card.CardValue.NINE),
+            new Card(Card.CardSuit.SPADES, Card.CardValue.TWO)
+    ));
 
-public class HandValue {
-
-    public enum Type {
-        HIGH_CARD(0),
-        PAIR(1),
-        TWO_PAIRS(2),
-        THREE_OF_A_KIND(3),
-        STRAIGHT(4),
-        FLUSH(5),
-        FULL_HOUSE(6),
-        FOUR_OF_A_KIND(7),
-        STRAIGHT_FLUSH(8),
-        ROYAL_FLUSH(9);
-
-        private final int value;
-
-        Type(int value) {
-            this.value = value;
-        }
-    }
-
-    private final Card.CardValue highestCardValue;
-    private final Type type;
-
-    private final List<Card.CardValue> kickers;
-
-    public HandValue(Card.CardValue highestCardValue, Type type, List<Card.CardValue> kickers) {
-        this.highestCardValue = highestCardValue;
-        this.type = type;
-        this.kickers = kickers;
-    }
-
-    // type = factor 1_000_000
-    // highest card = 100_000
-    // kicker = 10_000 1_000, 100, 10
-
-
-    // A) Flush: J, 10, 6, 5, 4
-    // B) Flush: J, 10, 7, 3, 2
-
-    // --> Winner: B
-
-    // 5 (flush) * 100000 + 11 (J) *1000 + 6*100 + 5*10 + 4*1
-    // = 511654
-
-    // 5 (flush) * 100000 + 11 (J)*1000 + 7*100 + 3*10 + 2*1
-    // = 511732
-
-
-
+    Assertions.assertEquals(
+            new PokerShowdown(alice, bob).winner(),
+            alice
+    );
 }
 ```
+
+After adding/modifying test code, run the test either with gradle or maven.
+
+```shell
+./gradlew test
+```
+
+or
+
+```shell
+./mvnw verify
+```
+
+(On windows, replace `gradlew` with `gradlew.bat` or `mvnw` with `mvnw.cmd` respectively)
+
+

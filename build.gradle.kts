@@ -20,6 +20,8 @@ description = "pokergame"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 dependencies {
+    implementation("com.google.guava:guava:32.1.3-jre")
+
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 

@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class HighCard extends HandValue {
@@ -8,9 +6,7 @@ public class HighCard extends HandValue {
     public HighCard(List<Card.CardValue> values) {
         super(HandValueType.HIGH_CARD);
         assert values.size() == 5;
-        this.values = new ArrayList<>(values);
-        Collections.sort(this.values);
-        Collections.reverse(this.values);
+        this.values = values;
     }
 
     @Override
